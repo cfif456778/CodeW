@@ -1,0 +1,32 @@
+function catAndMouse(map, moves) {
+  // Разбиваем карту по строкам
+  const rows = map.split('\n');
+
+  // Координаты кошки (cRow, cCol) и мыши (mRow, mCol) - изначально «-1» = не найдены
+  let cRow = -1, cCol = -1;
+  let mRow = -1, mCol = -1;
+
+  // Ищем позиции 'C' (кошка) и 'm' (мышь)
+  for (let row = 0; row < rows.length; row++) {
+    for (let col = 0; col < rows[row].length; col++) {
+      if (rows[row][col] === 'C') {
+        cRow = row;
+        cCol = col;
+      } else if (rows[row][col] === 'm') {
+        mRow = row;
+        mCol = col;
+      }
+    }
+  }
+
+  // Если хотя бы одна из позиций не найдена — возвращаем "boring without two animals"
+  if (cRow === -1 || mRow === -1) {
+    return "boring without two animals";
+  }
+
+  // Рассчитываем «количество ходов» (манхэттеново расстояние) от кошки до мыши
+  const distance = Math.abs(cRow - mRow) + Math.abs(cCol - mCol);
+
+  // Если расстояние <= moves, значит кошка может поймать мышь
+  return distance <= moves ? "Caught!" : "Escaped!";
+}
